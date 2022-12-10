@@ -25,7 +25,6 @@ const addUser = async(req, res)=>{
     }
 }
 
-//how to check if data already exist in mongodb?
 
 const updateUserProfile = async(req, res)=>{
     
