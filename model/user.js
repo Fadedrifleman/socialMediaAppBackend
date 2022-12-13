@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const validator = require('validator'); 
+const validator = require('validator');
 
 const valid= (id) =>{
     return id.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/) ? true : false;
@@ -43,7 +43,11 @@ const userSchema = new mongoose.Schema({
         validate:[ valid, 'Password must contain one upper character, one lower character and a number. Max length 15 and min length 8'],
         match:[/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,  'Password must contain one upper character, one lower character and a number. Max length 15 and min length 8'],
     }, 
-    
+    post:[{
+        type: mongoose.Schema.Types.ObjectId,
+         ref: 'Post',
+    }],
+
 });
 
 module.exports = mongoose.model('User', userSchema)
