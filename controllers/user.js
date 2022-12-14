@@ -1,6 +1,5 @@
 const User = require("../model/user");
 const Post = require("../model/post");
-const Comment = require("../model/comment");
 
 const getUser = async(req, res)=>{
     try {
@@ -28,7 +27,6 @@ const addUser = async(req, res)=>{
 
 
 const updateUserProfile = async(req, res)=>{
-    
     try {
         
     } catch (error) {
@@ -36,17 +34,14 @@ const updateUserProfile = async(req, res)=>{
     }
 }
 
-const addPost = async(req, res)=>{
-    const user = await User.findById(req.params.id);
-    const post = new Post(req.body);
-    user.post.push(post)
+const deleteUser = async(req, res)=>{
     try {
-        post.save()
-        user.save()
-        res.send(user);
+        
     } catch (error) {
-        res.send(error);
+        
     }
 }
 
-module.exports  = { getUser, addUser, updateUserProfile, addPost};
+
+
+module.exports  = { getUser, addUser, updateUserProfile, deleteUser};
