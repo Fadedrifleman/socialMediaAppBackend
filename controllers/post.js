@@ -1,5 +1,6 @@
 const User = require("../model/user");
 const Post = require("../model/post");
+const post = require("../model/post");
 
 const getPost = async(req, res)=>{
     if(req.body.id){
@@ -11,14 +12,14 @@ const getPost = async(req, res)=>{
             });
             res.status(200).json(posts);
         } catch (error) {
-            console.log(error);
             res.status(500).json({message: error.message});
         }
     }
     try {
-
+        const posts = await Post.find({access: 'public'}).select('-access');
+        res.status(200).json(posts);
     } catch (error) {
-        
+        res.status(500).json({message: error.message});
     }
 };
 

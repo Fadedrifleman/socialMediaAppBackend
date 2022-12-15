@@ -14,8 +14,12 @@ const postSchema = new mongoose.Schema({
         type: String,
         max: [145, "body cannot exceed 145 character"],
     },
-    tags:{
+    tags: {
         type: String,
+    },
+    access: {
+        type: String, enum: ['private', 'public', 'only_me'],
+        default: 'public'
     },
     comment: {
         type: mongoose.Schema.Types.ObjectId,

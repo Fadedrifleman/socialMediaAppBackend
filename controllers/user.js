@@ -2,7 +2,7 @@ const User = require("../model/user");
 
 const getUser = async(req, res)=>{
     try {
-        const user = await User.findById(req.body.id).select('name username bio accountPrivacy posts');
+        const user = await User.findById(req.body.id);
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({message: error.message});
