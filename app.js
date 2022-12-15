@@ -13,6 +13,7 @@ app.use(express.json());
 //routes
 app.use("/api/v1/sma", main);
 
+process.env.MONGO_URI = "mongodb://paulo:senhamaravilhosa@0.0.0.0:50000";
 
 //server
 const port = process.env.PORT || 3000;

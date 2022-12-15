@@ -1,54 +1,51 @@
 const User = require("../model/user");
 const Post = require("../model/post");
-const post = require("../model/post");
 
-const getPost = async(req, res)=>{
-    if(req.body.id){
-        try {
-            const user = await User.findById(req.body.id).select('-_id post');
-            const posts = await user.post.map(async(postID) => {
-                const result = await Post.findById(postID).select('-_id title body');
-                return result;
-            });
-            res.status(200).json(posts);
-        } catch (error) {
-            res.status(500).json({message: error.message});
-        }
-    }
+const getPost = async (req, res) => {
     try {
-        const posts = await Post.find({access: 'public'}).select('-access');
+        if (req.body.id) {
+            const user = await User.findById(req.body.id);
+            await user.populate("post");
+            res.status(200).json(user.post);
+            return;
+        }
+
+        const posts = await Post.find({ access: 'public' }).select('-access');
         res.status(200).json(posts);
     } catch (error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });
     }
 };
 
-const addPost = async(req, res)=>{
-    const post = new Post(req.body.post);
-    const user = await User.findById(req.body.id).select('username post');
+const addPost = async (req, res) => {
     try {
+        if (!req.body.id)
+            throw new Error("id of the user is required");
+
+        const post = new Post(req.body.post);
+        const user = await User.findById(req.body.id).select('username post');
         user.post.push(post);
-        post.save();
-        user.save();
+        await post.save();
+        await user.save();
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });
     }
 };
 
-const updatePost = async(req, res)=>{
+const updatePost = async (req, res) => {
     try {
-        
+
     } catch (error) {
-        
+
     }
 };
 
-const deletePost = async(req, res)=>{
+const deletePost = async (req, res) => {
     try {
-        
+
     } catch (error) {
-        
+
     }
 };
 
