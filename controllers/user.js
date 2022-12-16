@@ -27,17 +27,20 @@ const addUser = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
     try {
-
+        const user = await User.findByIdAndUpdate(req.body.id, {$set: req.body}, {new: true});
+        res.status(200).json(user);
     } catch (error) {
-
+        console.log(error);
+        res.status(500).json({ message: error.message });
     }
 }
 
 const deleteUser = async (req, res) => {
     try {
-
+        const user = await User.findByIdAndDelete(req.body.id);
+        res.status(200).json(user);
     } catch (error) {
-
+        res.status(500).json({ message: error.message });
     }
 }
 

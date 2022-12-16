@@ -7,7 +7,6 @@ const getPost = async (req, res) => {
             const user = await User.findById(req.body.id);
             await user.populate("post");
             res.status(200).json(user.post);
-            return;
         }
 
         const posts = await Post.find({ access: 'public' }).select('-access');
