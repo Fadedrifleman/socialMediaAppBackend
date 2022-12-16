@@ -13,7 +13,6 @@ app.use(express.json());
 //routes
 app.use("/api/v1/sma", main);
 
-
 //server
 const port = process.env.PORT || 3000;
 const start = async () => {

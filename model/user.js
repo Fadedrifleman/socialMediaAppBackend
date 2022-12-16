@@ -1,29 +1,34 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const valid= (id) =>{
-    return id.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/) ? true : false;
-   }
+const valid = (password) => {
+    if (password.length > 15 || password.length < 8) return false;
+    if (!password.match(/[a-z]/g)) return false;
+    if (!password.match(/[A-Z]/g)) return false;
+    if (!password.match(/[0-9]/g)) return false;
+
+    return true;
+}
 
 const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now()
     },
-    email:{
-        type:String,
-        required:true,
-        validate: [ validator.isEmail, 'invalid email']
+    email: {
+        type: String,
+        required: true,
+        validate: [validator.isEmail, 'invalid email']
     },
-    phoneNumber:{
-        type:String,
-        validate:[ validator.isMobilePhone, 'invalid number']
+    phoneNumber: {
+        type: String,
+        validate: [validator.isMobilePhone, 'invalid number']
     },
     name: {
         type: String,
         required: [true, 'name must be provided'],
     },
-    username : {
+    username: {
         type: String,
         required: [true, 'Username must be provided'],
     },
@@ -35,17 +40,16 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    password:{
-        type:String,
-        min:8,
-        max:15,
-        required:true,
-        validate:[ valid, 'Password must contain one upper character, one lower character and a number. Max length 15 and min length 8'],
-        match:[/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,  'Password must contain one upper character, one lower character and a number. Max length 15 and min length 8'],
-    }, 
-    post:[{
+    password: {
+        type: String,
+        min: 8,
+        max: 15,
+        required: true,
+        validate: [valid, 'Password must contain one upper character, one lower character and a number. Max length 15 and min length 8'],
+    },
+    post: [{
         type: mongoose.Schema.Types.ObjectId,
-         ref: 'Post',
+        ref: 'Post',
     }],
 
 });
