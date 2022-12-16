@@ -11,12 +11,12 @@ const getComment = async(req, res)=>{
 };
 
 const addComment = async(req, res)=>{
-    const post = new Post(req.body.post);
+    const comment = new Comment(req.body.comment);
     try {
-        const user = await User.findById(req.body.id);
-        user.post.push(post)
-        post.save()
-        user.save()
+        const post = await Post.findById(req.body.id);
+        post.post.push(post);
+        await comment.save();
+        await post.save();
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({message: error.message});

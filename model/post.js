@@ -21,10 +21,10 @@ const postSchema = new mongoose.Schema({
         type: String, enum: ['private', 'public', 'only_me'],
         default: 'public'
     },
-    comment: {
+    comment: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
-    }
+    }],
 });
 
 module.exports = mongoose.model('Post', postSchema);
